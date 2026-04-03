@@ -1,36 +1,46 @@
-/**
- * db.js - Ket noi SQL Server dung mssql
- * TV-02 phu trach
- */
-const sql = require('mssql');
+const sql = require('mysql2/promise');
 
 const config = {
-   server:   process.env.DB_SERVER   || 'localhost',
-   database: process.env.DB_NAME     || 'QLDangKyHP',
-   user:     process.env.DB_USER     || 'sa',
-   password: process.env.DB_PASSWORD || '',
-   port:     parseInt(process.env.DB_PORT) || 1433,
-   options:  { encrypt: false, trustServerCertificate: true }
+  host: process.env.DB_SERVER || 'localhost',
+  database: process.env.DB_NAME || 'QLDangKyHP',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '12123',
+  port: parseInt(process.env.DB_PORT, 10) || 3306,
+  waitForConnections: true,
+  connectionLimit: 10,
+  queueLimit: 0,
+  // Cho phep query dung placeholder dang :ten_tham_so.
+  namedPlaceholders: true
 };
 
 let pool;
 
 async function connectDB() {
-   pool = await sql.connect(config);
-   console.log('Ket noi SQL Server thanh cong');
-   return pool;
+  if (pool) return pool;
+  pool = sql.createPool(config);
+  await pool.query('SELECT 1');
+  console.log('Ket noi MySQL thanh cong');
+  return pool;
 }
 
 async function execQuery(query, params = {}) {
-   const req = pool.request();
-   Object.entries(params).forEach(([k, v]) => req.input(k, v));
-   return req.query(query);
+  const [rows] = await pool.execute(query, params);
+  return rows;
 }
 
 async function execSP(spName, params = {}) {
-   const req = pool.request();
-   Object.entries(params).forEach(([k, v]) => req.input(k, v));
-   return req.execute(spName);
+  if (!/^[A-Za-z0-9_]+$/.test(spName)) {
+    throw new Error('Invalid stored procedure name');
+  }
+
+  const keys = Array.isArray(params) ? [] : Object.keys(params);
+  const placeholders = Array.isArray(params)
+    ? params.map(() => '?').join(',')
+    : keys.map((k) => `:${k}`).join(',');
+
+  const callSql = `CALL ${spName}(${placeholders})`;
+  const [rows] = await pool.execute(callSql, params);
+  return rows;
 }
 
 module.exports = { connectDB, execQuery, execSP, sql };
