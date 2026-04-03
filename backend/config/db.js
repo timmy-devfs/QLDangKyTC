@@ -4,7 +4,7 @@ const config = {
   host: process.env.DB_SERVER || 'localhost',
   database: process.env.DB_NAME || 'QLDangKyHP',
   user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '12123',
+  password: process.env.DB_PASSWORD || '123123',
   port: parseInt(process.env.DB_PORT, 10) || 3306,
   waitForConnections: true,
   connectionLimit: 10,
