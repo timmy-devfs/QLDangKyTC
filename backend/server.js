@@ -14,19 +14,19 @@ app.use(express.static(require('path').join(__dirname, '../frontend')));
 
 /* Routes */
 app.use('/api/auth',          require('./routes/authRoutes'));
-app.use('/api/sinh-vien',     require('./routes/sinhVienRoutes'));
-app.use('/api/giang-vien',    require('./routes/giangVienRoutes'));
-app.use('/api/hoc-phan',      require('./routes/hocPhanRoutes'));
-app.use('/api/lop-hoc-phan',  require('./routes/lopHocPhanRoutes'));
-app.use('/api/hoc-ky',        require('./routes/hocKyRoutes'));
-app.use('/api/dang-ky',       require('./routes/dangKyRoutes'));
-app.use('/api/diem',          require('./routes/diemRoutes'));
-app.use('/api/bao-cao',       require('./routes/baoCaoRoutes'));
+// app.use('/api/sinh-vien',     require('./routes/sinhVienRoutes'));
+// app.use('/api/giang-vien',    require('./routes/giangVienRoutes'));
+// app.use('/api/hoc-phan',      require('./routes/hocPhanRoutes'));
+// app.use('/api/lop-hoc-phan',  require('./routes/lopHocPhanRoutes'));
+// app.use('/api/hoc-ky',        require('./routes/hocKyRoutes'));
+// app.use('/api/dang-ky',       require('./routes/dangKyRoutes'));
+// app.use('/api/diem',          require('./routes/diemRoutes'));
+// app.use('/api/bao-cao',       require('./routes/baoCaoRoutes'));
 
 /* Error handler */
 app.use(require('./middleware/errorHandler'));
 
 const PORT = process.env.PORT || 3000;
-connectDB().then(() => {
+// connectDB().then(() => {
    app.listen(PORT, () => console.log(`Server dang chay tai http://localhost:${PORT}`));
-}).catch(err => { console.error('Loi ket noi DB:', err); process.exit(1); });
+// }).catch(err => { console.error('Loi ket noi DB:', err); process.exit(1); });
