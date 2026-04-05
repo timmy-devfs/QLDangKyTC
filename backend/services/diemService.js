@@ -33,3 +33,12 @@ exports.nhapDiem = async (req, res) => {
     res.status(500).json(err);
   }
 };
+
+// task 4.4 GPA view
+exports.getGPA = async (maSV) => {
+  const [rows] = await db.execute(
+    "SELECT * FROM V_GPA_HocKy WHERE maSV=?",
+    [maSV]
+  );
+  return rows;
+};

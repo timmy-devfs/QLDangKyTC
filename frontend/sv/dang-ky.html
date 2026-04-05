@@ -1,0 +1,26 @@
+﻿<pre> 
+task 4.7 + 4.8 Chọn HK, đăng ký, tab Đã đăng ký và Bảng điểm màu + form nhập điểm GV
+</pre> 
+
+<form id="dkForm">
+<input id="maSV" placeholder="Mã SV">
+<input id="maLopHP" placeholder="Mã lớp">
+<button>Đăng ký</button>
+</form>
+
+<script>
+    dkForm.onsubmit = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch("/api/dang-ky", {
+    method: "POST",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+    maSV: maSV.value,
+    maLopHP: maLopHP.value
+    })
+    });
+
+    alert((await res.json()).message);
+    };
+</script>
