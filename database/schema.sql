@@ -308,3 +308,9 @@ LEFT JOIN LopHocPhan lhp   ON dk.MaLHP = lhp.MaLHP
 LEFT JOIN HocPhan hp        ON lhp.MaHP = hp.MaHP
 LEFT JOIN Diem d            ON dk.MaDK = d.MaDK
 GROUP BY sv.MaSV, sv.HoTen;
+
+-- task 4.4 GPA view 
+CREATE VIEW V_GPA_HocKy AS
+SELECT maSV, AVG(diemTK) AS GPA
+FROM Diem
+GROUP BY maSV;

@@ -59,3 +59,8 @@ $RECYCLE.BIN/
 *.tmp
 *.temp
 ~$*
+
+# ── xóa .vs khỏi git 
+.vs/
+node_modules/
+.env

@@ -1,0 +1,26 @@
+﻿<form id="diemForm">
+    <input id="maSV">
+    <input id="maLopHP">
+    <input id="diemGK">
+    <input id="diemCK">
+    <button>Nhập</button>
+</form>
+
+<script>
+    diemForm.onsubmit = async (e) => {
+    e.preventDefault();
+
+    const res = await fetch("/api/diem", {
+    method: "PUT",
+    headers: {"Content-Type":"application/json"},
+    body: JSON.stringify({
+    maSV: maSV.value,
+    maLopHP: maLopHP.value,
+    diemGK: diemGK.value,
+    diemCK: diemCK.value
+    })
+    });
+
+    alert((await res.json()).message);
+    };
+</script>
